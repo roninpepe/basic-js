@@ -14,6 +14,11 @@ import { NotImplementedError } from '../extensions/index.js';
  * 
  */
 export default function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+  if(!Array.isArray(arr)){throw new Error()};
+  if(!arr.length){return []};
+  let n = [];
+  for(let i=0;i<arr.length;i++){
+    arr[i]==='--discard-next'?i++:arr[i]==='--discard-prev'?n.pop():arr[i]==='--double-next'?n.push(arr[i+1]):arr[i]==='--double-prev'?n.push(arr[i-1]):n.push(arr[i]);
+  };
+  return newArr.filter(e=>e!==undefined);
 }

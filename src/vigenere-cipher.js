@@ -20,12 +20,27 @@ import { NotImplementedError } from '../extensions/index.js';
  * 
  */
 export default class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(m){
+    this.m=m!=undefined?m:true
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(v,s){
+    v=v.toUpperCase();s=s.toUpperCase();
+    let r='',x=0;
+    for(let i=0;i<v.length;i++){
+        let k=s[(x>=s.length?x%s.length:x)];
+        if(v[i].charCodeAt()>64&&v[i].charCodeAt()<91){r+=String.fromCharCode((v[i].charCodeAt()+k.charCodeAt()+26)%26+65);x++}
+        else r+=v[i]
+    }
+    return this.m?r:r.split('').reverse().join('');
+  }
+  decrypt(v,s){
+    v=v.toUpperCase();s=s.toUpperCase();
+    let r='',x=0;
+    for(let i=0;i<v.length;i++){
+        let k=s[(x>=s.length?x%s.length:x)];
+        if(v[i].charCodeAt()>64&&v[i].charCodeAt()<91){r+=String.fromCharCode((v[i].charCodeAt()-k.charCodeAt()+26)%26+65);x++}
+        else r+=v[i]
+    }
+    return this.m?r:r.split('').reverse().join('');
   }
 }
